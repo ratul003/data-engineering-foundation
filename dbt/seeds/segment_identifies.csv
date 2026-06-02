@@ -1,0 +1,17 @@
+message_id,user_id,anonymous_id,alias_id,group_id,traits_email,traits_name,traits_account_id,traits_role,received_at,_loaded_at
+msg_001,usr_101,anon_a01,anon_a01,acc_001,alice@acmecorp.com,Alice Chen,acc_001,admin,2025-01-15 09:00:00,2025-01-15 09:01:00
+msg_002,usr_102,anon_a02,anon_a02,acc_001,bob@acmecorp.com,Bob Tanaka,acc_001,editor,2025-01-20 10:00:00,2025-01-20 10:01:00
+msg_003,usr_103,anon_a03,anon_a03,acc_001,carol@acmecorp.com,Carol Patel,acc_001,viewer,2025-02-01 08:00:00,2025-02-01 08:01:00
+msg_004,usr_201,anon_b01,anon_b01,acc_002,dan@buildco.io,Dan Osei,acc_002,admin,2025-03-01 09:00:00,2025-03-01 09:01:00
+msg_005,usr_202,anon_b02,anon_b02,acc_002,emma@buildco.io,Emma Larsson,acc_002,editor,2025-03-10 11:00:00,2025-03-10 11:01:00
+msg_006,usr_301,anon_c01,anon_c01,acc_003,finn@capsulehealth.com,Finn Murphy,acc_003,admin,2025-02-10 09:30:00,2025-02-10 09:31:00
+msg_007,usr_302,anon_c02,anon_c02,acc_003,grace@capsulehealth.com,Grace Kim,acc_003,analyst,2025-02-15 10:00:00,2025-02-15 10:01:00
+msg_008,usr_401,anon_d01,anon_d01,acc_004,henry@datadriven.co,Henry Rossi,acc_004,admin,2025-04-01 08:00:00,2025-04-01 08:01:00
+msg_009,usr_402,anon_d02,anon_d02,acc_004,isabel@datadriven.co,Isabel Nkosi,acc_004,editor,2025-04-05 09:00:00,2025-04-05 09:01:00
+msg_010,usr_403,anon_d03,anon_d03,acc_004,jorge@datadriven.co,Jorge Lima,acc_004,viewer,2025-04-15 10:00:00,2025-04-15 10:01:00
+msg_011,usr_501,anon_e01,anon_e01,acc_005,kate@elevatefinancial.com,Kate Andersen,acc_005,admin,2025-01-01 08:00:00,2025-01-01 08:01:00
+msg_012,usr_502,anon_e02,anon_e02,acc_005,liam@elevatefinancial.com,Liam Okafor,acc_005,editor,2025-01-10 09:00:00,2025-01-10 09:01:00
+msg_013,usr_503,anon_e03,anon_e03,acc_005,maya@elevatefinancial.com,Maya Singh,acc_005,analyst,2025-02-01 10:00:00,2025-02-01 10:01:00
+msg_014,usr_801,anon_h01,anon_h01,acc_008,noah@horizonlabs.io,Noah Ferreira,acc_008,admin,2025-02-01 09:00:00,2025-02-01 09:01:00
+msg_015,usr_802,anon_h02,anon_h02,acc_008,olivia@horizonlabs.io,Olivia Johansson,acc_008,editor,2025-02-05 10:00:00,2025-02-05 10:01:00
+msg_016,usr_803,anon_h03,anon_h03,acc_008,pablo@horizonlabs.io,Pablo Reyes,acc_008,analyst,2025-02-10 11:00:00,2025-02-10 11:01:00

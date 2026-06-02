@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: opal_fine_grained_usage
+    description: >
+      Row-level Opal usage events enriched with account, identity, and billing context.
+      Primary consumer: Finance (invoicing) and Product (feature usage analysis).
+      Grain: one row per usage event.
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_opal_accounts')
+              field: account_id
+      - name: credits_consumed
+        tests:
+          - not_null
+      - name: billing_month
+        tests:
+          - not_null
+
+  - name: opal_daily_account_usage
+    description: >
+      Daily credit consumption per account with month-to-date running totals.
+      Primary consumer: CS (account health monitoring) and Product (usage dashboards).
+      Grain: one row per (account_id, event_date).
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+      - name: event_date
+        tests:
+          - not_null
+      - name: credits_consumed_mtd
+        description: Running sum of credits consumed since the start of the billing month.
+        tests:
+          - not_null
+
+  - name: opal_customer_balances
+    description: >
+      Period-level credit balance snapshot per account. One row per billing period.
+      balance_status drives CS risk queue routing. is_over_limit drives Finance invoicing.
+      Grain: one row per (account_id, billing period).
+    columns:
+      - name: allocation_id
+        tests:
+          - not_null
+          - unique
+      - name: balance_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["healthy", "high_usage", "at_risk", "over_limit"]
+      - name: utilization_pct
+        description: credits_consumed / credits_allocated * 100. May exceed 100 for over-limit accounts.
+
+  - name: opal_customer_overages
+    description: >
+      Overage periods only — accounts where credits_consumed exceeded credits_allocated.
+      recommended_action drives escalation workflow: monitor → cs_outreach → escalate_to_ae.
+      Primary consumer: CS and Account Executives.
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+      - name: recommended_action
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["monitor", "cs_outreach", "escalate_to_ae"]

@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: stg_opal_events
+    description: >
+      Cleaned Opal usage events. One row per usage event (AGENT_EXECUTED, TOOL_CALLED,
+      WORKFLOW_RUN). Credits_consumed is the billing unit for overage calculation.
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+      - name: event_name
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["AGENT_EXECUTED", "TOOL_CALLED", "WORKFLOW_RUN"]
+      - name: account_id
+        tests:
+          - not_null
+      - name: credits_consumed
+        tests:
+          - not_null
+      - name: event_date
+        tests:
+          - not_null
+
+  - name: stg_opal_accounts
+    description: >
+      Deduplicated account master. One row per account — latest record wins.
+      plan_tier is a derived numeric rank for easy range filtering.
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+          - unique
+      - name: plan_type
+        tests:
+          - accepted_values:
+              values: ["starter", "growth", "enterprise"]
+      - name: status
+        tests:
+          - accepted_values:
+              values: ["active", "churned", "suspended"]
+      - name: monthly_credit_limit
+        tests:
+          - not_null
+
+  - name: stg_opal_credit_allocations
+    description: >
+      Monthly credit allocations per account per billing period. One row per
+      (account_id, period_start) — allocations are unique per billing cycle.
+    columns:
+      - name: allocation_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_opal_accounts')
+              field: account_id
+      - name: credits_allocated
+        tests:
+          - not_null
+
+  - name: stg_segment_identifies
+    description: >
+      Cleaned Segment identify() calls. The alias_id column contains the anonymous MCID
+      that was bridged to this userId via Segment's alias() call at login.
+    columns:
+      - name: message_id
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null

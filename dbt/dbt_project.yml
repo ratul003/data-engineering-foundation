@@ -1,0 +1,33 @@
+name: opal_billing
+version: "1.0.0"
+config-version: 2
+
+profile: opal_billing
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+analysis-paths: ["analyses"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  opal_billing:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table
+      +schema: reporting
+
+seeds:
+  opal_billing:
+    +schema: seed_data
+    opal_events:
+      +column_types:
+        credits_consumed: float
+    opal_credit_allocations:
+      +column_types:
+        credits_allocated: float
