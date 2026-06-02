@@ -163,36 +163,11 @@ function DEToolCard({ name }: { name: string }) {
 
 const techStack = ["Snowflake", "dbt", "Segment", "Fivetran", "Airbyte", "Python", "Snowpipe", "PowerBI"];
 
-// ── Credit utilization chart data ─────────────────────────────────────────────
-
-const ACCOUNTS = [
-  { id: "acc_001", name: "Acme Corp",         plan: "enterprise", limit: 50000, used: 42100, status: "high_usage" },
-  { id: "acc_002", name: "Buildco Inc",        plan: "growth",     limit: 10000, used: 10800, status: "over_limit" },
-  { id: "acc_003", name: "Capsule Health",     plan: "growth",     limit: 10000, used: 6500,  status: "healthy"    },
-  { id: "acc_004", name: "DataDriven Co",      plan: "starter",    limit: 2000,  used: 760,   status: "healthy"    },
-  { id: "acc_005", name: "Elevate Financial",  plan: "enterprise", limit: 50000, used: 31000, status: "healthy"    },
-  { id: "acc_008", name: "Horizon Labs",       plan: "enterprise", limit: 50000, used: 22000, status: "healthy"    },
-];
-
-const STATUS_COLOR: Record<string, string> = {
-  healthy:    "#10b981",
-  high_usage: "#f59e0b",
-  at_risk:    "#f97316",
-  over_limit: "#f43f5e",
-};
-
-const STATUS_LABEL: Record<string, string> = {
-  healthy:    "Healthy",
-  high_usage: "High usage",
-  at_risk:    "At risk",
-  over_limit: "Over limit",
-};
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Page() {
-  const [activeLayer, setActiveLayer]       = useState<string | null>(null);
-  const [hoveredAccount, setHoveredAccount] = useState<string | null>(null);
+  const [activeLayer, setActiveLayer]           = useState<string | null>(null);
   const [activeIdentifier, setActiveIdentifier] = useState<string | null>(null);
 
   // layer detail content
@@ -975,96 +950,6 @@ export default function Page() {
                     <p style={{ fontSize: "0.84rem", color: "#94a3b8", lineHeight: 1.7 }}>{body}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Credit Utilization Chart ───────────────────────────────── */}
-        <section id="utilization" className="py-16 border-b" style={{ borderColor: "#1e1e2e" }}>
-          <SectionLabel>Billing Output</SectionLabel>
-          <SectionHeading>Account Credit Utilisation</SectionHeading>
-          <SectionDescription>
-            The four billing mart models converge on this view: credit consumption vs. allocation,
-            per account, per billing period. Hover any bar to see account detail. The{" "}
-            <span style={{ color: "#f43f5e" }}>over-limit</span> flag triggers the CS escalation
-            workflow and finance invoicing in one query.
-          </SectionDescription>
-
-          <div className="mt-8" style={{ background: "#111118", border: "1px solid #1e1e2e", borderRadius: "16px", padding: "28px" }}>
-            {/* Legend */}
-            <div className="flex flex-wrap gap-4 mb-8">
-              {[
-                { label: "Healthy",    color: "#10b981" },
-                { label: "High usage", color: "#f59e0b" },
-                { label: "Over limit", color: "#f43f5e" },
-              ].map(({ label, color }) => (
-                <div key={label} className="flex items-center gap-2">
-                  <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: color }} />
-                  <span className="text-xs text-slate-400">{label}</span>
-                </div>
-              ))}
-              <span className="text-xs text-slate-600 ml-auto">May 2025 · synthetic data</span>
-            </div>
-
-            {/* Bars */}
-            <div className="flex flex-col gap-5">
-              {ACCOUNTS.map((acc) => {
-                const pct = Math.min((acc.used / acc.limit) * 100, 120);
-                const color = STATUS_COLOR[acc.status];
-                const isHovered = hoveredAccount === acc.id;
-                return (
-                  <div
-                    key={acc.id}
-                    onMouseEnter={() => setHoveredAccount(acc.id)}
-                    onMouseLeave={() => setHoveredAccount(null)}
-                    style={{ cursor: "default" }}
-                  >
-                    <div className="flex items-center gap-3 mb-1.5">
-                      <span className="text-sm font-semibold" style={{ color: isHovered ? "#f1f5f9" : "#94a3b8", minWidth: "160px", transition: "color 0.15s" }}>{acc.name}</span>
-                      <span style={{ background: `${color}15`, color, fontSize: "0.65rem", fontWeight: 600, padding: "1px 7px", borderRadius: "999px", textTransform: "uppercase", letterSpacing: "0.07em", flexShrink: 0 }}>
-                        {STATUS_LABEL[acc.status]}
-                      </span>
-                      {isHovered && (
-                        <span className="text-xs text-slate-400 ml-auto">
-                          {acc.used.toLocaleString()} / {acc.limit.toLocaleString()} credits &nbsp;·&nbsp; {Math.round(pct)}%
-                        </span>
-                      )}
-                    </div>
-                    <div style={{ background: "#1e1e2e", borderRadius: "6px", height: "10px", overflow: "hidden", position: "relative" }}>
-                      <div
-                        style={{
-                          width: `${Math.min(pct, 100)}%`,
-                          background: isHovered
-                            ? `linear-gradient(90deg, ${color}cc, ${color})`
-                            : `linear-gradient(90deg, ${color}88, ${color}bb)`,
-                          height: "100%",
-                          borderRadius: "6px",
-                          transition: "background 0.15s ease, width 0.3s ease",
-                        }}
-                      />
-                      {pct > 100 && (
-                        <div style={{ position: "absolute", right: 0, top: 0, width: `${pct - 100}%`, maxWidth: "20%", background: "#f43f5e", height: "100%", borderRadius: "0 6px 6px 0", opacity: 0.7 }} />
-                      )}
-                      {/* 90% warning line */}
-                      <div style={{ position: "absolute", left: "90%", top: 0, bottom: 0, width: "1px", background: "#f59e0b44" }} />
-                    </div>
-                    {isHovered && (
-                      <div className="flex gap-4 mt-1.5">
-                        <span className="text-xs text-slate-500">Plan: <span className="text-slate-400">{acc.plan}</span></span>
-                        <span className="text-xs text-slate-500">Limit: <span className="text-slate-400">{acc.limit.toLocaleString()} credits</span></span>
-                        <span className="text-xs text-slate-500">Status: <span style={{ color }}>{STATUS_LABEL[acc.status]}</span></span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Axis labels */}
-            <div className="flex justify-between mt-4 px-[160px]">
-              {[0, 25, 50, 75, 100].map((tick) => (
-                <span key={tick} className="text-xs text-slate-600">{tick}%</span>
               ))}
             </div>
           </div>
