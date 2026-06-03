@@ -9,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://data-engineering-foundation.vercel.app"),
   title: "Data Engineering Foundation",
   description:
     "The data engineering foundation powering Optimizely's product analytics platform — Snowflake, dbt, Segment, Fivetran, Airbyte.",
