@@ -341,7 +341,7 @@ QUALIFY ROW_NUMBER() OVER (
     key: "intermediate",
     label: "int_experiment_daily_stats",
     color: "#f59e0b",
-    desc: "Ephemeral — no table cost. Joins to conversions and aggregates by day.",
+    desc: "Ephemeral: no table cost. Joins to conversions and aggregates by day.",
     sql: `SELECT
   e.experiment_id,
   e.variation_key,
@@ -1345,7 +1345,7 @@ export default function Page() {
                 </div>
               </div>
               <p style={{ fontSize: "0.84rem", color: "#94a3b8", lineHeight: 1.72, marginBottom: "14px" }}>
-                Facts store what happened. Counts, sums, durations: anything you add up. The grain matters here — store at the finest level the business actually needs, because rolling up is easy. Going back in time to recover discarded detail is not.
+                Facts store what happened. Counts, sums, durations: anything you add up. The grain matters here: store at the finest level the business actually needs, because rolling up is easy. Going back in time to recover discarded detail is not.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                 {["impression_count", "conversion_count", "revenue_impact", "credit_usage"].map(f => (
@@ -1765,7 +1765,7 @@ export default function Page() {
             <div className="flex flex-col gap-3">
               {[
                 { step: "01", title: "RAW absorbs the change", body: "Append-only means new columns from upstream APIs land without touching anything downstream. No model knows about it yet and nothing breaks." },
-                { step: "02", title: "Staging acknowledges it", body: "The staging model is where the field gets cast and typed. A breaking rename gets absorbed in the intermediate layer so the mart interface stays stable — consumers never see the shift." },
+                { step: "02", title: "Staging acknowledges it", body: "The staging model is where the field gets cast and typed. A breaking rename gets absorbed in the intermediate layer so the mart interface stays stable: consumers never see the shift." },
                 { step: "03", title: "Tests catch what doesn't fit", body: "Schema tests run before the mart rebuilds. A null in a key field or an unexpected type fails loudly at the bottom of the stack, not quietly at the top." },
               ].map(({ step, title, body }) => (
                 <div key={step} className="flex gap-4 items-start" style={{ background: "#111118", border: "1px solid #1e1e2e", borderRadius: "12px", padding: "16px 18px" }}>
