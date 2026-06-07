@@ -495,9 +495,10 @@ export default function Page() {
               Data Engineering Foundation
             </span>
           </div>
-          <span className="text-xs text-slate-400 hidden sm:block">
-            Wahid Tawsif Ratul&nbsp;&middot;&nbsp;Product Analytics Engineer
-          </span>
+          <div className="hidden sm:flex flex-col items-end gap-0.5">
+            <span className="text-xs font-semibold text-white">Wahid Tawsif Ratul</span>
+            <span className="text-xs text-emerald-400">Data Scientist · Product Manager</span>
+          </div>
         </div>
       </nav>
 
@@ -2011,7 +2012,7 @@ export default function Page() {
           <PortfolioLinks />
           <div>
             <div className="font-semibold text-white mb-0.5">Wahid Tawsif Ratul</div>
-            <div className="text-xs text-slate-500">Product Analytics Engineer</div>
+            <div className="text-xs text-slate-400">Data Scientist · Product Manager</div>
           </div>
           <a
             href="https://github.com/ratul003/data-engineering-foundation"
