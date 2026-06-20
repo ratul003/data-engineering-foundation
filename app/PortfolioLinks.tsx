@@ -35,7 +35,7 @@ export default function PortfolioLinks() {
         ))}
       </div>
       <div style={{ fontSize: "0.7rem", color: "#64748b", marginTop: "12px" }}>
-        Written case study — all architecture, metrics, and data described from first-hand engineering work at Optimizely. No proprietary data reproduced.
+        Written case study — all architecture, metrics, and data described from first-hand engineering work at a B2B experimentation and digital-experience platform. No proprietary data reproduced.
       </div>
     </div>
   );

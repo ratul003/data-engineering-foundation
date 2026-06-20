@@ -463,8 +463,8 @@ export default function Page() {
     },
     REPORTING: {
       title: "Reporting layer: stable, consumer-facing contracts",
-      body: "The reporting layer is a contract with our consumers. PowerBI and Optimizely Analytics query here: they never touch intermediate models. When I refactor a dbt model, the consumer's query doesn't break because the reporting interface is stable.",
-      items: ["Product analytics: usage & adoption marts", "Application metrics: feature engagement", "AI billing: Opal credit consumption & overages", "Published via Snowflake Private Share: zero data movement"],
+      body: "The reporting layer is a contract with our consumers. PowerBI and the in-house analytics platform query here: they never touch intermediate models. When I refactor a dbt model, the consumer's query doesn't break because the reporting interface is stable.",
+      items: ["Product analytics: usage & adoption marts", "Application metrics: feature engagement", "AI billing: agent credit consumption & overages", "Published via Snowflake Private Share: zero data movement"],
     },
     Egress: {
       title: "Egress: three paths, three audiences",
@@ -639,7 +639,7 @@ export default function Page() {
             {[
               {
                 title: "No shared identity",
-                body: "Each product tracked users with its own identifier. A user in Experimentation and the same user in Content Management were unrelated rows with no bridge. Cross-product analysis was structurally impossible, not just difficult.",
+                body: "Each product tracked users with its own identifier. A user in the experimentation product and the same user in the content product were unrelated rows with no bridge. Cross-product analysis was structurally impossible, not just difficult.",
                 icon: (<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="12" r="4" stroke="#f43f5e" strokeWidth="1.8"/><circle cx="16" cy="12" r="4" stroke="#f43f5e" strokeWidth="1.8"/><line x1="12" y1="8" x2="12" y2="16" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="2 2"/></svg>),
                 accent: "#f43f5e",
               },
@@ -717,7 +717,7 @@ export default function Page() {
                     items: [
                       { name: "Product Analytics", sub: "Usage & adoption marts"  },
                       { name: "Application Metrics", sub: "Feature engagement"    },
-                      { name: "AI / Opal Billing",   sub: "Usage & overage models" },
+                      { name: "AI Agent Billing",   sub: "Usage & overage models" },
                     ],
                   },
                   null,
@@ -853,7 +853,7 @@ export default function Page() {
                   badge: "group() call",
                   badgeColor: "#29B5E8",
                   desc: activeIdentifier === "groupId"
-                    ? "Fired via Segment's group() call when the user joins or switches an organisation. This is the cross-product join key: the same groupId appears in Experimentation, CMP, and Opal. Without it, you can answer user-level questions but never account-level ones. Billing, health scores, and expansion analysis all operate at this level."
+                    ? "Fired via Segment's group() call when the user joins or switches an organisation. This is the cross-product join key: the same groupId appears across the experimentation, content, and AI agent products. Without it, you can answer user-level questions but never account-level ones. Billing, health scores, and expansion analysis all operate at this level."
                     : "Org-level identifier. The cross-product join key: same groupId across all 8 products.",
                   color: "#29B5E8",
                   arrowLabel: null,
@@ -925,7 +925,7 @@ export default function Page() {
                   {[
                     { product: "Experimentation",    event: "EXPERIMENT_RUN",    resolved: "acme-corp" },
                     { product: "Content Management", event: "CONTENT_PUBLISHED", resolved: "acme-corp" },
-                    { product: "Opal",               event: "AGENT_EXECUTED",    resolved: "acme-corp" },
+                    { product: "AI Agent",           event: "AGENT_EXECUTED",    resolved: "acme-corp" },
                     { product: "Campaign",           event: "CAMPAIGN_SENT",     resolved: "acme-corp" },
                   ].map((row) => (
                     <div key={row.product} className="flex items-center gap-3 text-xs" style={{ background: "#16161f", borderRadius: "7px", padding: "8px 10px" }}>
@@ -1039,7 +1039,7 @@ export default function Page() {
               },
               {
                 decision: "Separate TRANSFORM from REPORTING",
-                rationale: "Keeping staging and intermediate models in the transform layer and final marts in reporting gives consumers a stable interface. PowerBI and Optimizely Analytics query the reporting layer: they never see an intermediate model. When I refactor a dbt model, the consumer's query doesn't break.",
+                rationale: "Keeping staging and intermediate models in the transform layer and final marts in reporting gives consumers a stable interface. PowerBI and the in-house analytics platform query the reporting layer: they never see an intermediate model. When I refactor a dbt model, the consumer's query doesn't break.",
                 color: "#10b981",
                 icon: (<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h7" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round"/><circle cx="18" cy="17" r="3" stroke="#10b981" strokeWidth="1.8"/><path d="M16.5 17h3M18 15.5v3" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round"/></svg>),
               },
@@ -1800,7 +1800,7 @@ export default function Page() {
                   { step: "01", label: "Internal production models",    sub: "Final mart tables validated and ready for consumption" },
                   { step: "02", label: "Controlled promotion",          sub: "Atomic swap from development to public-facing schema" },
                   { step: "03", label: "Snowflake Private Share",       sub: "Zero-copy share to consumers: no data movement" },
-                  { step: "04", label: "Downstream consumers",          sub: "PowerBI · Optimizely Analytics · External customers" },
+                  { step: "04", label: "Downstream consumers",          sub: "PowerBI · Analytics Platform · External customers" },
                 ].map((item) => (
                   <div key={item.step} className="flex items-start gap-3">
                     <span className="text-xs font-mono font-bold mt-0.5" style={{ color: "#10b981" }}>{item.step}</span>
@@ -1863,7 +1863,7 @@ export default function Page() {
                 icon: (<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" stroke="#6366f1" strokeWidth="1.8" strokeLinejoin="round"/></svg>),
               },
               {
-                outcome: "Opal billing accuracy",
+                outcome: "AI agent billing accuracy",
                 detail: "The dbt billing DAG: fine-grained usage, daily rollups, credit balances, overage detection: powers Finance's invoicing and Customer Success's health score. A single source of truth replaced a spreadsheet-based reconciliation process that no one fully trusted.",
                 color: "#10b981",
                 icon: (<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2" stroke="#10b981" strokeWidth="1.8"/><path d="M3 10h18M8 3v3M16 3v3" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round"/><path d="M8 14l2 2 4-4" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),

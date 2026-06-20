@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://data-engineering-foundation.vercel.app"),
   title: "Data Engineering Foundation",
   description:
-    "The data engineering foundation powering Optimizely's product analytics platform — Snowflake, dbt, Segment, Fivetran, Airbyte.",
+    "The data engineering foundation powering a B2B experimentation platform's product analytics — Snowflake, dbt, Segment, Fivetran, Airbyte.",
   openGraph: {
     title: "Data Engineering Foundation",
     description:
-      "145B rows · 6.17 TB · 1.9M ELT queries/week. The infrastructure behind Optimizely's product analytics.",
+      "145B rows · 6.17 TB · 1.9M ELT queries/week. The infrastructure behind a B2B experimentation platform's product analytics.",
     type: "website",
   },
 };
