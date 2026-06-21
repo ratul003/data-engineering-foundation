@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Data Engineering Foundation — Wahid Tawsif Ratul";
+export const alt = "Data Engineering Foundation by Wahid Tawsif Ratul";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -36,7 +36,7 @@ export default function Image() {
             Data Engineering Foundation
           </div>
           <div style={{ marginTop: "26px", fontSize: "27px", lineHeight: 1.45, color: "#9a9ab8", maxWidth: "900px" }}>
-            A three-layer Snowflake warehouse — parallel ELT, dbt modeling, and governed publishing — built for cross-product analytics.
+            A three-layer Snowflake warehouse, built for cross-product analytics: parallel ELT, dbt modeling, and governed publishing.
           </div>
         </div>
 

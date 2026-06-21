@@ -167,7 +167,7 @@ const techStack = ["Snowflake", "dbt", "Segment", "Fivetran", "Airbyte", "Python
 const MODEL_DETAILS: Record<string, { layer: string; color: string; purpose: string; logic: string; output: string }> = {
   "stg_experiment_exposures": {
     layer: "STAGING", color: "#29B5E8",
-    purpose: "Entry point for all experiment exposure events. Cleans, casts, and deduplicates the most critical row in the DAG:the moment a user was assigned to a variation.",
+    purpose: "Entry point for all experiment exposure events. Cleans, casts, and deduplicates the most critical row in the DAG: the moment a user was assigned to a variation.",
     logic: "Cast exposure_timestamp → TIMESTAMP_NTZ. Rename source_user_id → user_id. Deduplicate on (experiment_id, user_id, variation_key) keeping the earliest record per user.",
     output: "One clean row per exposure event. No nulls on primary key fields.",
   },
@@ -179,9 +179,9 @@ const MODEL_DETAILS: Record<string, { layer: string; color: string; purpose: str
   },
   "stg_experiment_flags": {
     layer: "STAGING", color: "#29B5E8",
-    purpose: "Handles feature flag evaluation events, including pre-launch traffic where variation_key is null:a case that silently breaks naive pipelines.",
+    purpose: "Handles feature flag evaluation events, including pre-launch traffic where variation_key is null: a case that silently breaks naive pipelines.",
     logic: "COALESCE(variation_key, 'off') for pre-launch null handling. Filter out internal test accounts by account_id prefix. Cast evaluated_at.",
-    output: "One row per flag evaluation. Null variation keys handled:no downstream nulls from pre-launch traffic.",
+    output: "One row per flag evaluation. Null variation keys handled: no downstream nulls from pre-launch traffic.",
   },
   "stg_accounts": {
     layer: "STAGING", color: "#29B5E8",
@@ -215,13 +215,13 @@ const MODEL_DETAILS: Record<string, { layer: string; color: string; purpose: str
   },
   "fact_daily_impressions": {
     layer: "MARTS", color: "#10b981",
-    purpose: "Pre-aggregated daily rollup table for velocity and trend queries:prevents expensive full-scans on the granular exposure grain for time-series charts.",
+    purpose: "Pre-aggregated daily rollup table for velocity and trend queries: prevents expensive full-scans on the granular exposure grain for time-series charts.",
     logic: "Materialized as TABLE, clustered by experiment_id. Built from int_experiment_daily_stats, not raw exposures. Optimised for PowerBI date-range slicers.",
     output: "One row per (experiment_id, variation_key, date). Fields: impression_count, conversion_count.",
   },
   "dim_experiment": {
     layer: "MARTS", color: "#10b981",
-    purpose: "Experiment metadata dimension. SCD Type 1:overwrites are safe because experiment names and hypotheses are corrected, not historically meaningful.",
+    purpose: "Experiment metadata dimension. SCD Type 1: overwrites are safe because experiment names and hypotheses are corrected, not historically meaningful.",
     logic: "Joins stg_experiment_flags to get rollout metadata. Derives status from started_at / ended_at dates. Adds product_line classification for cross-experiment slicing.",
     output: "One row per experiment_id. Fields: name, hypothesis, product_line, experiment_type, status, started_at, ended_at.",
   },
@@ -247,7 +247,7 @@ JOIN   dim_account a
 WHERE  f.experiment_id = 'exp-001'
   AND  a.is_current   = TRUE
 ORDER  BY f.conversion_count DESC`,
-    insight: "DIM_ACCOUNT contributes account name and tier context. FACT_EXPERIMENT_* holds conversion counts. One JOIN:no subqueries, no temp tables, no aggregation needed.",
+    insight: "DIM_ACCOUNT contributes account name and tier context. FACT_EXPERIMENT_* holds conversion counts. One JOIN: no subqueries, no temp tables, no aggregation needed.",
   },
   {
     q: "How did daily impressions ramp for variation B?",
@@ -260,7 +260,7 @@ JOIN   dim_experiment e
 WHERE  e.experiment_id = 'exp-001'
   AND  d.variation_key = 'variation_b'
 ORDER  BY d.exposure_date`,
-    insight: "FACT_DAILY_IMPRESSIONS_* is pre-aggregated:no GROUP BY needed for a trend chart. At exposure-level grain this query scans millions of rows. The daily rollup table reduces that to one row per day.",
+    insight: "FACT_DAILY_IMPRESSIONS_* is pre-aggregated: no GROUP BY needed for a trend chart. At exposure-level grain this query scans millions of rows. The daily rollup table reduces that to one row per day.",
   },
   {
     q: "What tier were winning accounts at time of test?",
@@ -951,7 +951,7 @@ export default function Page() {
                 },
                 {
                   q: "Why groupId and not just userId?",
-                  a: "Multiple users share one account. Billing, health scores, and expansion signals all operate at the account level. groupId is what makes account-level analytics possible: and account-level is where commercial decisions get made.",
+                  a: "Multiple users share one account. Billing, health scores, and expansion signals all operate at the account level. groupId is what makes account-level analytics possible, and account-level is where commercial decisions get made.",
                 },
                 {
                   q: "What breaks without this layer?",
@@ -1081,12 +1081,12 @@ export default function Page() {
             {[
               {
                 key: "source", label: "SOURCE", color: "#64748b",
-                desc: "Raw experiment event tables:append-only, no transforms applied",
+                desc: "Raw experiment event tables: append-only, no transforms applied",
                 nodes: [{ label: "Experiment Event Sources", sub: "exposures · conversions · flag evaluations" }],
               },
               {
                 key: "staging", label: "STAGING", color: "#29B5E8",
-                desc: "Cast · rename · deduplicate:one model per source, no business logic",
+                desc: "Cast · rename · deduplicate: one model per source, no business logic",
                 nodes: [
                   { label: "stg_experiment_exposures" },
                   { label: "stg_experiment_conversions" },
@@ -1361,13 +1361,13 @@ export default function Page() {
               {
                 num: "01", title: "Business Process", color: "#64748b",
                 question: "What business event are we measuring?",
-                answer: "A/B experiment exposure:when a user is assigned to a variation, that assignment is the atomic unit. Every downstream metric traces back to this event.",
+                answer: "A/B experiment exposure: when a user is assigned to a variation, that assignment is the atomic unit. Every downstream metric traces back to this event.",
                 icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#64748b" strokeWidth="1.8"/><path d="M8 12h8M12 8l4 4-4 4" stroke="#64748b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
               },
               {
                 num: "02", title: "Grain", color: "#29B5E8",
                 question: "What does one row represent?",
-                answer: "One user exposure per variation per experiment. Never the experiment summary:that's a derived aggregate. The grain preserves the ability to slice by date, account, device, or any future dimension.",
+                answer: "One user exposure per variation per experiment. Never the experiment summary: that's a derived aggregate. The grain preserves the ability to slice by date, account, device, or any future dimension.",
                 icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="4" rx="1.5" stroke="#29B5E8" strokeWidth="1.8"/><rect x="3" y="10" width="12" height="4" rx="1.5" stroke="#29B5E8" strokeWidth="1.8" opacity="0.7"/><rect x="3" y="17" width="8" height="4" rx="1.5" stroke="#29B5E8" strokeWidth="1.8" opacity="0.4"/></svg>),
               },
               {
@@ -1379,7 +1379,7 @@ export default function Page() {
               {
                 num: "04", title: "Facts / Measures", color: "#10b981",
                 question: "What numeric values do we store?",
-                answer: "impression_count, conversion_count, revenue_impact:all additive. Sum by account for ARR attribution. Sum by day for velocity trends. The measures never change; the slicing does.",
+                answer: "impression_count, conversion_count, revenue_impact: all additive. Sum by account for ARR attribution. Sum by day for velocity trends. The measures never change; the slicing does.",
                 icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 20V10M12 20V4M6 20v-6" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/></svg>),
               },
             ].map(({ num, title, color, question, answer, icon }) => (

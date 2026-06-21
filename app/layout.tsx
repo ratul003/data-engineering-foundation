@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://data-engineering-foundation.vercel.app"),
   title: "Data Engineering Foundation",
   description:
-    "The data engineering foundation powering a B2B experimentation platform's product analytics — Snowflake, dbt, Segment, Fivetran, Airbyte.",
+    "The data engineering foundation powering a B2B experimentation platform's product analytics: Snowflake, dbt, Segment, Fivetran, Airbyte.",
   openGraph: {
     title: "Data Engineering Foundation",
     description:
