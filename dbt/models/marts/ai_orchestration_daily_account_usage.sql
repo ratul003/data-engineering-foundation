@@ -1,9 +1,9 @@
 with daily as (
-    select * from {{ ref('int_opal_daily_usage') }}
+    select * from {{ ref('int_ai_orchestration_daily_usage') }}
 ),
 
 accounts as (
-    select * from {{ ref('stg_opal_accounts') }}
+    select * from {{ ref('stg_ai_orchestration_accounts') }}
 ),
 
 with_running_total as (

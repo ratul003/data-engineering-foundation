@@ -1,9 +1,9 @@
 with events as (
-    select * from {{ ref('stg_opal_events') }}
+    select * from {{ ref('stg_ai_orchestration_events') }}
 ),
 
 accounts as (
-    select * from {{ ref('stg_opal_accounts') }}
+    select * from {{ ref('stg_ai_orchestration_accounts') }}
 ),
 
 identity as (

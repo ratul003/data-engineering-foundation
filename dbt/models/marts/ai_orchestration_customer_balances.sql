@@ -1,9 +1,9 @@
 with balances as (
-    select * from {{ ref('int_opal_account_balances') }}
+    select * from {{ ref('int_ai_orchestration_account_balances') }}
 ),
 
 accounts as (
-    select * from {{ ref('stg_opal_accounts') }}
+    select * from {{ ref('stg_ai_orchestration_accounts') }}
 ),
 
 enriched as (

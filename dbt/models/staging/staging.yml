@@ -1,9 +1,9 @@
 version: 2
 
 models:
-  - name: stg_opal_events
+  - name: stg_ai_orchestration_events
     description: >
-      Cleaned Opal usage events. One row per usage event (AGENT_EXECUTED, TOOL_CALLED,
+      Cleaned AI agent usage events. One row per usage event (AGENT_EXECUTED, TOOL_CALLED,
       WORKFLOW_RUN). Credits_consumed is the billing unit for overage calculation.
     columns:
       - name: event_id
@@ -25,7 +25,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_opal_accounts
+  - name: stg_ai_orchestration_accounts
     description: >
       Deduplicated account master. One row per account — latest record wins.
       plan_tier is a derived numeric rank for easy range filtering.
@@ -46,7 +46,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_opal_credit_allocations
+  - name: stg_ai_orchestration_credit_allocations
     description: >
       Monthly credit allocations per account per billing period. One row per
       (account_id, period_start) — allocations are unique per billing cycle.
@@ -59,7 +59,7 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_opal_accounts')
+              to: ref('stg_ai_orchestration_accounts')
               field: account_id
       - name: credits_allocated
         tests:

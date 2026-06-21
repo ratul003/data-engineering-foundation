@@ -1,15 +1,15 @@
 version: 2
 
 sources:
-  - name: opal_raw
+  - name: ai_orchestration_raw
     description: >
-      Raw Opal usage data landing in the RAW layer. In production this is populated
+      Raw AI orchestration platform usage data landing in the RAW layer. In production this is populated
       by Segment (events) and Fivetran (account/billing records). In this demo project
       the source tables are backed by seeds in seeds/.
     schema: seed_data
     tables:
-      - name: opal_events
-        description: Row-level Opal tool and agent usage events from Segment track() calls.
+      - name: ai_orchestration_events
+        description: Row-level AI orchestration platform tool and usage events from Segment track() calls.
         loaded_at_field: _loaded_at
         freshness:
           warn_after: { count: 3, period: hour }
@@ -33,7 +33,7 @@ sources:
             tests:
               - not_null
 
-      - name: opal_accounts
+      - name: ai_orchestration_accounts
         description: Account master — one row per account. Updated nightly via Fivetran.
         columns:
           - name: account_id
@@ -49,7 +49,7 @@ sources:
               - accepted_values:
                   values: ["active", "churned", "suspended"]
 
-      - name: opal_credit_allocations
+      - name: ai_orchestration_credit_allocations
         description: Monthly credit allocations per account per billing period.
         columns:
           - name: allocation_id
@@ -60,7 +60,7 @@ sources:
             tests:
               - not_null
               - relationships:
-                  to: source('opal_raw', 'opal_accounts')
+                  to: source('ai_orchestration_raw', 'ai_orchestration_accounts')
                   field: account_id
 
   - name: segment_raw

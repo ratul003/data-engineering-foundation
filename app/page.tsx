@@ -717,7 +717,7 @@ export default function Page() {
                     items: [
                       { name: "Product Analytics", sub: "Usage & adoption marts"  },
                       { name: "Application Metrics", sub: "Feature engagement"    },
-                      { name: "AI Agent Billing",   sub: "Usage & overage models" },
+                      { name: "AI Orchestration Billing", sub: "Usage & overage models" },
                     ],
                   },
                   null,
@@ -853,7 +853,7 @@ export default function Page() {
                   badge: "group() call",
                   badgeColor: "#29B5E8",
                   desc: activeIdentifier === "groupId"
-                    ? "Fired via Segment's group() call when the user joins or switches an organisation. This is the cross-product join key: the same groupId appears across the experimentation, content, and AI agent products. Without it, you can answer user-level questions but never account-level ones. Billing, health scores, and expansion analysis all operate at this level."
+                    ? "Fired via Segment's group() call when the user joins or switches an organisation. This is the cross-product join key: the same groupId appears across the experimentation, content, and AI orchestration platform products. Without it, you can answer user-level questions but never account-level ones. Billing, health scores, and expansion analysis all operate at this level."
                     : "Org-level identifier. The cross-product join key: same groupId across all 8 products.",
                   color: "#29B5E8",
                   arrowLabel: null,
@@ -925,7 +925,7 @@ export default function Page() {
                   {[
                     { product: "Experimentation",    event: "EXPERIMENT_RUN",    resolved: "acme-corp" },
                     { product: "Content Management", event: "CONTENT_PUBLISHED", resolved: "acme-corp" },
-                    { product: "AI Agent",           event: "AGENT_EXECUTED",    resolved: "acme-corp" },
+                    { product: "AI Orchestration",   event: "AGENT_EXECUTED",    resolved: "acme-corp" },
                     { product: "Campaign",           event: "CAMPAIGN_SENT",     resolved: "acme-corp" },
                   ].map((row) => (
                     <div key={row.product} className="flex items-center gap-3 text-xs" style={{ background: "#16161f", borderRadius: "7px", padding: "8px 10px" }}>
@@ -1863,7 +1863,7 @@ export default function Page() {
                 icon: (<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" stroke="#6366f1" strokeWidth="1.8" strokeLinejoin="round"/></svg>),
               },
               {
-                outcome: "AI agent billing accuracy",
+                outcome: "AI orchestration platform billing accuracy",
                 detail: "The dbt billing DAG: fine-grained usage, daily rollups, credit balances, overage detection: powers Finance's invoicing and Customer Success's health score. A single source of truth replaced a spreadsheet-based reconciliation process that no one fully trusted.",
                 color: "#10b981",
                 icon: (<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2" stroke="#10b981" strokeWidth="1.8"/><path d="M3 10h18M8 3v3M16 3v3" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round"/><path d="M8 14l2 2 4-4" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
@@ -1916,28 +1916,28 @@ export default function Page() {
                 <div className="pl-4">├── dbt_project.yml</div>
                 <div className="pl-4">├── packages.yml</div>
                 <div className="pl-4" style={{ color: "#64748b" }}>├── seeds/</div>
-                <div className="pl-8" style={{ color: "#52BD94" }}>│   ├── opal_accounts.csv</div>
-                <div className="pl-8" style={{ color: "#52BD94" }}>│   ├── opal_events.csv</div>
-                <div className="pl-8" style={{ color: "#52BD94" }}>│   ├── opal_credit_allocations.csv</div>
+                <div className="pl-8" style={{ color: "#52BD94" }}>│   ├── ai_orchestration_accounts.csv</div>
+                <div className="pl-8" style={{ color: "#52BD94" }}>│   ├── ai_orchestration_events.csv</div>
+                <div className="pl-8" style={{ color: "#52BD94" }}>│   ├── ai_orchestration_credit_allocations.csv</div>
                 <div className="pl-8" style={{ color: "#52BD94" }}>│   └── segment_identifies.csv</div>
                 <div className="pl-4" style={{ color: "#64748b" }}>└── models/</div>
                 <div className="pl-8">├── sources.yml</div>
                 <div className="pl-8" style={{ color: "#64748b" }}>├── staging/</div>
-                <div className="pl-12">├── stg_opal_events.sql</div>
-                <div className="pl-12">├── stg_opal_accounts.sql</div>
-                <div className="pl-12">├── stg_opal_credit_allocations.sql</div>
+                <div className="pl-12">├── stg_ai_orchestration_events.sql</div>
+                <div className="pl-12">├── stg_ai_orchestration_accounts.sql</div>
+                <div className="pl-12">├── stg_ai_orchestration_credit_allocations.sql</div>
                 <div className="pl-12">├── stg_segment_identifies.sql</div>
                 <div className="pl-12" style={{ color: "#6366f1" }}>└── staging.yml</div>
                 <div className="pl-8" style={{ color: "#64748b" }}>├── intermediate/</div>
-                <div className="pl-12">├── int_opal_daily_usage.sql</div>
-                <div className="pl-12">├── int_opal_account_balances.sql</div>
+                <div className="pl-12">├── int_ai_orchestration_daily_usage.sql</div>
+                <div className="pl-12">├── int_ai_orchestration_account_balances.sql</div>
                 <div className="pl-12">├── int_identity_resolution.sql</div>
                 <div className="pl-12" style={{ color: "#6366f1" }}>└── intermediate.yml</div>
                 <div className="pl-8" style={{ color: "#64748b" }}>└── marts/</div>
-                <div className="pl-12" style={{ color: "#10b981" }}>├── opal_fine_grained_usage.sql</div>
-                <div className="pl-12" style={{ color: "#10b981" }}>├── opal_daily_account_usage.sql</div>
-                <div className="pl-12" style={{ color: "#10b981" }}>├── opal_customer_balances.sql</div>
-                <div className="pl-12" style={{ color: "#10b981" }}>├── opal_customer_overages.sql</div>
+                <div className="pl-12" style={{ color: "#10b981" }}>├── ai_orchestration_fine_grained_usage.sql</div>
+                <div className="pl-12" style={{ color: "#10b981" }}>├── ai_orchestration_daily_account_usage.sql</div>
+                <div className="pl-12" style={{ color: "#10b981" }}>├── ai_orchestration_customer_balances.sql</div>
+                <div className="pl-12" style={{ color: "#10b981" }}>├── ai_orchestration_customer_overages.sql</div>
                 <div className="pl-12" style={{ color: "#6366f1" }}>└── marts.yml</div>
               </div>
             </div>

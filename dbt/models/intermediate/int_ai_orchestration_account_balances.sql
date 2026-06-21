@@ -1,9 +1,9 @@
 with allocations as (
-    select * from {{ ref('stg_opal_credit_allocations') }}
+    select * from {{ ref('stg_ai_orchestration_credit_allocations') }}
 ),
 
 daily_usage as (
-    select * from {{ ref('int_opal_daily_usage') }}
+    select * from {{ ref('int_ai_orchestration_daily_usage') }}
 ),
 
 period_consumption as (

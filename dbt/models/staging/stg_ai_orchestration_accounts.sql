@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('opal_raw', 'opal_accounts') }}
+    select * from {{ source('ai_orchestration_raw', 'ai_orchestration_accounts') }}
 ),
 
 deduped as (

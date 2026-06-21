@@ -1,5 +1,5 @@
 with balances as (
-    select * from {{ ref('opal_customer_balances') }}
+    select * from {{ ref('ai_orchestration_customer_balances') }}
 ),
 
 overage_periods as (
