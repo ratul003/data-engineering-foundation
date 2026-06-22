@@ -178,3 +178,5 @@ section[id] { scroll-margin-top: 80px; }
 table { display: block; width: max-content; max-width: 100%; overflow-x: auto; }
 /* Wide code/SQL blocks scroll inside themselves. */
 pre { max-width: 100%; overflow-x: auto; }
+
+html, body { overflow-x: clip; }
