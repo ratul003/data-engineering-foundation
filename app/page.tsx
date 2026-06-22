@@ -680,7 +680,7 @@ export default function Page() {
           </SectionDescription>
 
           {/* Interactive architecture diagram */}
-          <div className="mt-10 overflow-x-auto">
+          <div className="mt-10" style={{ overflowX: "auto", maxWidth: "100%" }}>
             <div className="min-w-[680px]">
               <div className="flex items-stretch gap-3">
                 {[

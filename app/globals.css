@@ -172,3 +172,9 @@ section[id] { scroll-margin-top: 80px; }
 
 .section-rail { display: none; }
 @media (min-width: 1280px) { .section-rail { display: flex; } }
+
+/* ── Responsive containment (no horizontal page scroll on phones) ──────────── */
+/* Wide tables scroll inside themselves instead of pushing the page body. */
+table { display: block; width: max-content; max-width: 100%; overflow-x: auto; }
+/* Wide code/SQL blocks scroll inside themselves. */
+pre { max-width: 100%; overflow-x: auto; }
