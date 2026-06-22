@@ -928,9 +928,9 @@ export default function Page() {
                     { product: "AI Orchestration",   event: "AGENT_EXECUTED",    resolved: "acme-corp" },
                     { product: "Campaign",           event: "CAMPAIGN_SENT",     resolved: "acme-corp" },
                   ].map((row) => (
-                    <div key={row.product} className="flex items-center gap-3 text-xs" style={{ background: "#16161f", borderRadius: "7px", padding: "8px 10px" }}>
+                    <div key={row.product} className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs min-w-0" style={{ background: "#16161f", borderRadius: "7px", padding: "8px 10px" }}>
                       <span className="font-semibold flex-shrink-0" style={{ color: "#f1f5f9", minWidth: "140px" }}>{row.product}</span>
-                      <code style={{ color: "#52BD94", fontFamily: "monospace", fontSize: "0.72rem", flex: 1 }}>{row.event}</code>
+                      <code className="min-w-0" style={{ color: "#52BD94", fontFamily: "monospace", fontSize: "0.72rem", flex: 1, overflowWrap: "anywhere" }}>{row.event}</code>
                       <span style={{ background: "#10b98115", color: "#10b981", padding: "1px 7px", borderRadius: "999px", fontFamily: "monospace", fontSize: "0.7rem", fontWeight: 600, flexShrink: 0 }}>→ {row.resolved}</span>
                     </div>
                   ))}
@@ -1479,9 +1479,9 @@ export default function Page() {
 
           {/* Star topology diagram */}
           <div className="mt-10 mb-8" style={{ background: "#111118", border: "1px solid #1e1e2e", borderRadius: "16px", padding: "24px" }}>
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex flex-wrap items-center justify-between gap-y-3 mb-5">
               <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#64748b" }}>Join topology</span>
-              <div className="flex items-center gap-5">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 min-w-0">
                 <div className="flex items-center gap-1.5"><div style={{ width: 10, height: 10, borderRadius: 2, background: "#6366f130", border: "1.5px solid #6366f166" }} /><span className="text-xs text-slate-500">Dimension</span></div>
                 <div className="flex items-center gap-1.5"><div style={{ width: 10, height: 10, borderRadius: 2, background: "#10b98120", border: "1.5px solid #10b98155" }} /><span className="text-xs text-slate-500">Fact</span></div>
                 <div className="flex items-center gap-1.5"><div style={{ width: 24, height: 2, background: "#10b981", borderRadius: 1 }} /><span className="text-xs text-slate-500">Conformed join</span></div>
